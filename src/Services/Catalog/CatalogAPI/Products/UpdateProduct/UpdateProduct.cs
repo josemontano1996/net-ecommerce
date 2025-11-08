@@ -7,7 +7,7 @@ internal class UpdateProductCommandHandler(IDocumentSession session, ILogger<Upd
 {
   public async Task<UpdateProductResult> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
   {
-    logger.LogInformation("UpdateProductHanlder.Handle called with {@Command}", command);
+    logger.LogInformation("UpdateProductCommandHandler.Handle called with {@Command}", command);
 
     var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
@@ -38,7 +38,7 @@ public class UpdateProductEndpoint : ICarterModule
   {
     app.MapPut("/product", async (UpdateProductRequest request, ISender sender) =>
     {
-      var command = request.Adapt<UpdateProductRequest>();
+      var command = request.Adapt<UpdateProductCommand>();
 
       var result = await sender.Send(command);
 

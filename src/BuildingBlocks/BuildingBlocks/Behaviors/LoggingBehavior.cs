@@ -20,7 +20,7 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
     var timeTaken = timer.Elapsed;
     if (timeTaken.Seconds > 3)
     {
-      logger.LogWarning("[PERFORMANCE] The request {Request} took {TimeTaken}", typeof(TRequest).Name, timeTaken.Seconds);
+      logger.LogWarning("[PERFORMANCE] The request {Request} took {TimeTaken} seconds", typeof(TRequest).Name, timeTaken.Seconds);
     }
 
     logger.LogInformation("[END] Handled {Request} with {Response}", typeof(TRequest).Name, response);

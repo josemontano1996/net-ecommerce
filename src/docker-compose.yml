@@ -1,6 +1,8 @@
 services:
   catalogdb:
     image: postgres:18.0
+  adminer:
+    image: adminer
 
 volumes:
   postgres_catalog:

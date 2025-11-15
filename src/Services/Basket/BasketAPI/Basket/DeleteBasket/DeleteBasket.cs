@@ -1,25 +1,23 @@
-﻿using Mapster;
-
-namespace BasketAPI.Basket.DeleteBasket;
+﻿namespace BasketAPI.Basket.DeleteBasket;
 
 public record DeleteBasketCommand(string UserName) : ICommand<DeleteBasketResult>;
 public record DeleteBasketResult(bool IsSuccess);
 public class DeleteBasketCommandValidator : AbstractValidator<DeleteBasketCommand>
 {
-  public DeleteBasketCommandValidator()
-  {
-    RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is required");
-  }
+    public DeleteBasketCommandValidator()
+    {
+        RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is required");
+    }
 }
 
-internal class DeleteBasketHandler : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
+internal class DeleteBasketHandler(IBasketRespository repo) : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
 {
-  public async Task<DeleteBasketResult> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
-  {
-    // TODO: delete basket from database and cache
+    public async Task<DeleteBasketResult> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
+    {
+        await repo.DeleteBasket(request.UserName, cancellationToken);
 
-    return new DeleteBasketResult(true);
-  }
+        return new DeleteBasketResult(true);
+    }
 }
 
 
@@ -28,20 +26,20 @@ public record DeleteBasketResponse(bool IsSuccess);
 
 public class DeleteBasketEndpoint : ICarterModule
 {
-  public void AddRoutes(IEndpointRouteBuilder app)
-  {
-    app.MapDelete("/basket/{userName}", async (string userName, ISender sender) =>
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-      var result = await sender.Send(new DeleteBasketCommand(userName));
+        app.MapDelete("/basket/{userName}", async (string userName, ISender sender) =>
+        {
+            var result = await sender.Send(new DeleteBasketCommand(userName));
 
-      var response = result.Adapt<DeleteBasketResponse>();
+            var response = result.Adapt<DeleteBasketResponse>();
 
-      return Results.Ok(response);
-    })
-        .WithName("DeleteBasket")
-        .Produces<DeleteBasketResult>(StatusCodes.Status200OK)
-        .ProducesProblem(StatusCodes.Status400BadRequest)
-        .WithSummary("DeleteBasket")
-        .WithDescription("DeleteBasket");
-  }
+            return Results.Ok(response);
+        })
+            .WithName("DeleteBasket")
+            .Produces<DeleteBasketResult>(StatusCodes.Status200OK)
+            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .WithSummary("DeleteBasket")
+            .WithDescription("DeleteBasket");
+    }
 }

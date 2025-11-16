@@ -1,11 +1,15 @@
 services:
   catalogdb:
     image: postgres:18.0
+
   basketdb:
     image: postgres:18.0
 
   adminer:
     image: adminer
+
+  distributedcache:
+    image: redis:8.2.3-alpine3.22
 
   catalogapi:
     image: ${DOCKER_REGISTRY-}catalogapi

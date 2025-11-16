@@ -22,14 +22,20 @@ services:
       - "5433:5432"
     volumes:
       - postgres_basket:/var/lib/postgresql
+    depends_on:
+      - catalogdb
 
   adminer:
     container_name: adminer
     restart: always
     ports:
       - "8080:8080" 
-    depends_on:
-      - catalogdb
+
+  distributedcache:
+    container_name: distributedcache
+    restart: always
+    ports:
+      - "6379:6379"
 
   catalogapi:
     environment:
@@ -39,6 +45,8 @@ services:
       - ConnectionStrings__CatalogDb=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true;
     depends_on:
       - catalogdb
+      - basketdb
+      - distributedcache
     ports:
       - "6000:8080"
       - "6060:8081"

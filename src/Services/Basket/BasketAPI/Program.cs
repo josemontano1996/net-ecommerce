@@ -8,18 +8,18 @@ builder.Services.AddCarter();
 
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssembly(assembly);
-    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+  config.RegisterServicesFromAssembly(assembly);
+  config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+  config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 
 builder.Services.AddMarten(opts =>
 {
-    opts.Connection(builder.Configuration.GetConnectionString("Database")!);
-    opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
+  opts.Connection(builder.Configuration.GetConnectionString("Database")!);
+  opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
 }).UseLightweightSessions();
 
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IBasketRepository, CacheBasketRepository>();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 

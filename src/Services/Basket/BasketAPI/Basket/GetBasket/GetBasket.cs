@@ -2,7 +2,7 @@
 
 public record GetBasketQuery(string UserName) : IQuery<GetBasketResult>;
 public record GetBasketResult(ShoppingCart Cart);
-internal class GetBasketQueryHandler(IBasketRespository repo) : IQueryHandler<GetBasketQuery, GetBasketResult>
+internal class GetBasketQueryHandler(IBasketRepository repo) : IQueryHandler<GetBasketQuery, GetBasketResult>
 {
     public async Task<GetBasketResult> Handle(GetBasketQuery query, CancellationToken cancellationToken)
     {

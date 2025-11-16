@@ -10,7 +10,7 @@ public class DeleteBasketCommandValidator : AbstractValidator<DeleteBasketComman
     }
 }
 
-internal class DeleteBasketHandler(IBasketRespository repo) : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
+internal class DeleteBasketHandler(IBasketRepository repo) : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
 {
     public async Task<DeleteBasketResult> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
     {

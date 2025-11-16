@@ -1,6 +1,6 @@
 ﻿namespace BasketAPI.Data;
 
-public interface IBasketRespository
+public interface IBasketRepository
 {
   Task<ShoppingCart> GetBasket(string userName, CancellationToken cancellation = default);
   Task<ShoppingCart> StoreBasket(ShoppingCart shoppingCart, CancellationToken cancellationToken = default);

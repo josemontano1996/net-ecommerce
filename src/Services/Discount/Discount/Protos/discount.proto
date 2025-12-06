@@ -29,7 +29,7 @@ message CreateDiscountRequest {
 }
 
 message UpdateDiscountRequest {
-  CouponModel coupont = 1;
+  CouponModel coupon = 1;
 }
 
 message DeleteDiscountRequest {
@@ -37,5 +37,5 @@ message DeleteDiscountRequest {
 }
 
 message DeleteDiscountResponse {
-  string success = 1;
+  bool success = 1;
 }

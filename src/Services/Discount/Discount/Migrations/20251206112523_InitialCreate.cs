@@ -20,7 +20,7 @@ namespace Discount.Grpc.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductName = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Ammount = table.Column<int>(type: "INTEGER", nullable: false)
+                    Amount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +29,7 @@ namespace Discount.Grpc.Migrations
 
             migrationBuilder.InsertData(
                 table: "Coupons",
-                columns: new[] { "Id", "Ammount", "Description", "ProductName" },
+                columns: new[] { "Id", "Amount", "Description", "ProductName" },
                 values: new object[,]
                 {
                     { 1, 150, "Iphone Discount", "IPhone X" },
